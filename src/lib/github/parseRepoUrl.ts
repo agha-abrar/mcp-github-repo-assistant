@@ -15,15 +15,30 @@ export function parseRepoUrl(
   if (!input || typeof input !== "string") return null;
 
   const trimmed = input.trim();
+  if (!trimmed) return null;
 
-  // Allow the user to paste a bare "owner/repo" as well as a full URL.
-  const withProtocol = /^https?:\/\//i.test(trimmed)
-    ? trimmed
-    : `https://${trimmed.replace(/^\/\//, "")}`;
+  const bareRepoMatch = trimmed.match(/^([a-zA-Z0-9._-]+)\/([a-zA-Z0-9._-]+)$/);
+  if (bareRepoMatch) {
+    return { owner: bareRepoMatch[1], repo: bareRepoMatch[2] };
+  }
+
+  let normalized = trimmed;
+
+  if (/^git@github\.com:/i.test(normalized)) {
+    normalized = normalized.replace(/^git@github\.com:/i, "https://github.com/");
+  } else if (/^git\+https?:\/\//i.test(normalized)) {
+    normalized = normalized.replace(/^git\+/, "");
+  } else if (/^github\.com\//i.test(normalized)) {
+    normalized = `https://${normalized}`;
+  } else if (/^www\.github\.com\//i.test(normalized)) {
+    normalized = `https://${normalized}`;
+  } else if (!/^(https?:)?\/\//i.test(normalized)) {
+    normalized = `https://${normalized.replace(/^\//, "")}`;
+  }
 
   let url: URL;
   try {
-    url = new URL(withProtocol);
+    url = new URL(normalized);
   } catch {
     return null;
   }

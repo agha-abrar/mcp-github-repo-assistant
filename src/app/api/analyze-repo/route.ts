@@ -20,15 +20,33 @@ import { AnalyzeRepoErrorResponse, AnalyzeRepoResponse } from "@/types/analysis"
  * on GitHub, and never exposes GITHUB_TOKEN or OPENAI_API_KEY to the client.
  */
 export async function POST(req: NextRequest) {
-  let body: { url?: string };
+  let body: { url?: string; repoUrl?: string };
   try {
     body = await req.json();
   } catch {
     return errorResponse("INVALID_URL", "Request body must be valid JSON.", 400);
   }
 
-  const parsed = body.url ? parseRepoUrl(body.url) : null;
+  const inputUrl =
+    typeof body.url === "string"
+      ? body.url.trim()
+      : typeof body.repoUrl === "string"
+        ? body.repoUrl.trim()
+        : "";
+  const profileLikeMatch = inputUrl.match(
+    /^(?:https?:\/\/)?(?:www\.)?github\.com\/([a-zA-Z0-9._-]+)\/?$/i
+  );
+
+  const parsed = inputUrl ? parseRepoUrl(inputUrl) : null;
   if (!parsed) {
+    if (profileLikeMatch) {
+      return errorResponse(
+        "INVALID_URL",
+        "That looks like a GitHub profile page. Please enter a repository URL like https://github.com/owner/repo.",
+        400
+      );
+    }
+
     return errorResponse(
       "INVALID_URL",
       "That doesn't look like a valid GitHub repository URL. Try something like https://github.com/owner/repo.",
