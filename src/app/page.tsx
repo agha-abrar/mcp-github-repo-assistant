@@ -45,19 +45,21 @@ export default function Home() {
   return (
     <main className="min-h-screen">
       <section
-        className={`bg-hero-grid border-b border-border-soft px-6 ${
+        className={`relative overflow-hidden bg-hero-grid border-b border-border-soft px-6 ${
           showHero ? "py-24" : "py-12"
         } transition-all`}
       >
-        <div className="mx-auto max-w-2xl text-center">
-          <p className="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-accent-mint/80">
+        <div className="pointer-events-none absolute -right-24 top-12 h-56 w-56 rounded-full bg-accent-mint/20 blur-3xl animate-hero-float" />
+        <div className="pointer-events-none absolute left-1/2 top-16 h-72 w-72 -translate-x-1/2 rounded-full bg-[#5eead493] opacity-30 blur-3xl animate-bg-shimmer" />
+        <div className="mx-auto max-w-2xl text-center animate-fade-up">
+          <p className="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-accent-mint/80 opacity-0 animate-fade-up-slow">
             MCP-powered · read-only
           </p>
-          <h1 className="text-3xl font-bold tracking-tight text-ink sm:text-4xl">
+          <h1 className="text-3xl font-bold tracking-tight text-ink sm:text-4xl animate-hero-float">
             GitHub Repo Assistant
           </h1>
           {showHero && (
-            <p className="mx-auto mt-3 max-w-lg text-sm leading-relaxed text-ink-muted">
+            <p className="mx-auto mt-3 max-w-lg text-sm leading-relaxed text-ink-muted opacity-0 animate-fade-up-slow">
               Paste a repository URL. An MCP-style layer fetches its real README,
               issues, and pull requests, then an AI analyzer turns that into a
               full project report — issue triage, doc gaps, a 7-day sprint plan,
