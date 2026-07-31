@@ -5,6 +5,7 @@ interface ReportSectionProps {
   title: string;
   subtitle?: string;
   children: ReactNode;
+  delay?: number;
 }
 
 /**
@@ -12,9 +13,12 @@ interface ReportSectionProps {
  * with a short commit-hash-style id instead of "01/02/03" - a small nod to
  * the fact that this whole report is built from real git/GitHub data.
  */
-export default function ReportSection({ hash, title, subtitle, children }: ReportSectionProps) {
+export default function ReportSection({ hash, title, subtitle, children, delay = 0 }: ReportSectionProps) {
   return (
-    <section className="rounded-lg border border-border bg-bg-surface shadow-card">
+    <section
+      className="rounded-lg border border-border bg-bg-surface shadow-card transition duration-300 ease-out hover:-translate-y-0.5 hover:shadow-xl animate-fade-up"
+      style={{ animationDelay: `${delay}s` }}
+    >
       <header className="flex items-baseline gap-3 border-b border-border-soft px-5 py-4">
         <span className="font-mono text-xs text-accent-mint/70">{hash}</span>
         <div>
