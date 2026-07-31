@@ -120,7 +120,7 @@ export default function AnalysisDashboard({ data }: { data: AnalyzeRepoResponse 
   }
 
   return (
-    <div className="mx-auto max-w-4xl space-y-5 pb-16">
+    <div className="mx-auto max-w-4xl space-y-5 pb-16 opacity-0 animate-fade-up">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
           <p className="font-mono text-xs text-ink-faint">report for</p>
@@ -141,11 +141,11 @@ export default function AnalysisDashboard({ data }: { data: AnalyzeRepoResponse 
         </button>
       </div>
 
-      <ReportSection hash="a1b2c3d" title="Project overview">
+      <ReportSection hash="a1b2c3d" title="Project overview" delay={0.05}>
         <p className="text-sm leading-relaxed text-ink-muted">{analysis.projectSummary}</p>
       </ReportSection>
 
-      <ReportSection hash="e4f5a6b" title="Repository metadata">
+      <ReportSection hash="e4f5a6b" title="Repository metadata" delay={0.1}>
         <div className="mb-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
           <Stat label="Stars" value={metadata.stars.toLocaleString()} />
           <Stat label="Forks" value={metadata.forks.toLocaleString()} />
@@ -159,7 +159,7 @@ export default function AnalysisDashboard({ data }: { data: AnalyzeRepoResponse 
         <p className="mt-3 text-sm leading-relaxed text-ink-muted">{analysis.repoMetadataSummary}</p>
       </ReportSection>
 
-      <ReportSection hash="7c8d9e0" title="README summary">
+      <ReportSection hash="7c8d9e0" title="README summary" delay={0.15}>
         <p className="text-sm leading-relaxed text-ink-muted">{analysis.readmeSummary}</p>
       </ReportSection>
 
@@ -167,6 +167,7 @@ export default function AnalysisDashboard({ data }: { data: AnalyzeRepoResponse 
         hash="1f2a3b4"
         title="Issue priority analysis"
         subtitle={`${analysis.issueAnalysis.totalIssuesAnalyzed} open issues analyzed`}
+        delay={0.2}
       >
         <div className="space-y-5">
           <IssueGroup priority="high" issues={analysis.issueAnalysis.highPriority} />
@@ -179,6 +180,7 @@ export default function AnalysisDashboard({ data }: { data: AnalyzeRepoResponse 
         hash="5c6d7e8"
         title="Pull request summary"
         subtitle={`${analysis.pullRequestSummary.totalPRsAnalyzed} pull requests analyzed`}
+        delay={0.25}
       >
         <p className="mb-3 text-sm leading-relaxed text-ink-muted">
           {analysis.pullRequestSummary.summary}
@@ -194,7 +196,7 @@ export default function AnalysisDashboard({ data }: { data: AnalyzeRepoResponse 
         )}
       </ReportSection>
 
-      <ReportSection hash="9a0b1c2" title="Documentation gaps">
+      <ReportSection hash="9a0b1c2" title="Documentation gaps" delay={0.3}>
         {analysis.documentationGaps.length === 0 ? (
           <p className="text-sm text-ink-faint">No significant documentation gaps found.</p>
         ) : (
@@ -208,7 +210,7 @@ export default function AnalysisDashboard({ data }: { data: AnalyzeRepoResponse 
         )}
       </ReportSection>
 
-      <ReportSection hash="3d4e5f6" title="7-day sprint plan">
+      <ReportSection hash="3d4e5f6" title="7-day sprint plan" delay={0.35}>
         <ol className="relative space-y-5 border-l border-border pl-6">
           {analysis.sprintPlan.map((day, i) => (
             <li key={i} className="relative">
@@ -227,14 +229,14 @@ export default function AnalysisDashboard({ data }: { data: AnalyzeRepoResponse 
         </ol>
       </ReportSection>
 
-      <ReportSection hash="7g8h9i0" title="Project health score">
+      <ReportSection hash="7g8h9i0" title="Project health score" delay={0.4}>
         <HealthGauge score={analysis.projectHealthScore.score} />
         <p className="mt-4 text-sm leading-relaxed text-ink-muted">
           {analysis.projectHealthScore.reason}
         </p>
       </ReportSection>
 
-      <ReportSection hash="b1c2d3e" title="Final recommendations">
+      <ReportSection hash="b1c2d3e" title="Final recommendations" delay={0.45}>
         <ul className="space-y-1.5">
           {analysis.finalRecommendations.map((rec, i) => (
             <li key={i} className="flex gap-2 text-sm text-ink-muted">

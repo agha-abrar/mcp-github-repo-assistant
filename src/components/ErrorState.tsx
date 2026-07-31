@@ -6,7 +6,7 @@ export default function ErrorState({
   onRetry?: () => void;
 }) {
   return (
-    <div className="mx-auto max-w-2xl rounded-lg border border-accent-danger/30 bg-accent-danger/5 p-6">
+    <div className="mx-auto max-w-2xl rounded-lg border border-accent-danger/30 bg-accent-danger/5 p-6 opacity-0 animate-fade-up">
       <div className="flex items-start gap-3">
         <span className="mt-0.5 font-mono text-accent-danger">✕</span>
         <div className="flex-1">
